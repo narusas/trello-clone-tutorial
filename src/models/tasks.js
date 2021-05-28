@@ -10,6 +10,13 @@ async function getTasks() {
   parsePayload(payload);
 }
 
+async function updateLaneTitle(laneId, title){
+    console.log("updateLaneTitle", laneId, title);
+    await axios.put(`/api/lanes/${laneId}`, {title});
+    await getTasks();
+}
+
+
 async function fetchData(){
     const response = await axios.get("/api/tasks");
     console.log("response",response);
