@@ -40,7 +40,7 @@ import {onClickOutside} from "@vueuse/core";
 
 import {useModel} from "../models/tasks.js";
 
-const {changeTaskTitle, toggleTaskDone} = useModel();
+const {updateTaskTitle, toggleTaskDone} = useModel();
 
 const props = defineProps({
   task: {
@@ -48,7 +48,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmit(["task-title-changed"]);
+const emit = defineEmit(["editCompleted", "editCanceled"]);
 
 const isEditing = ref(!!props.task?.isNewAppened);
 
@@ -66,12 +66,13 @@ onMounted(() => {
 
 function completeEditing() {
   isEditing.value = false;
-  changeTaskTitle(props.task, editing.value);
-  emit("task-title-changed", editing.value);
+  updateTaskTitle(props.task.id, editing.value);
+  emit("editCompleted", editing.value);
 }
 
 function cancel() {
   isEditing.value = false;
+  emit("editCanceled");
 }
 
 function goingToEdit() {

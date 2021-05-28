@@ -1,10 +1,10 @@
 <template>
   <div class="bg-blue-400 w-full h-full p-8 flex font-sans">
-    <tasks-lane 
-      v-for="laneId in laneList" 
-      :key="laneId"
-      :lane="lanes[laneId]"
-      />
+    <tasks-lane
+        v-for="laneId in laneList"
+        :key="laneId"
+        :lane="lanes[laneId]"
+    />
   </div>
 </template>
 
@@ -15,9 +15,11 @@ import TasksLane from "./components/TasksLane.vue";
 import axios from "axios";
 import {useModel} from "./models/tasks.js";
 
-const {getTasks, laneList, lanes,tasks} = useModel();
+const taskModel = useModel();
+const {getTasks, laneList, lanes, tasks, updateLaneTitle} = taskModel;
 
 provide("tasks", tasks);
+provide("taskModel", taskModel);
 onMounted(getTasks);
 
 
